@@ -1,7 +1,7 @@
 // Values & Variables
 const country = 'Taiwan'
 const continent = 'Asia'
-let population = 12
+let population = 2300
 
 console.log(country)
 console.log(continent)
@@ -137,3 +137,33 @@ if (day === 'monday') {
 } else {
   console.log("It's not a valid day!")
 }
+
+// const language = 'chinese'
+
+switch (language) {
+  case 'Chinese':
+  case 'Mandarin':
+    console.log('Most number of native speaker!')
+    break
+  case 'Spanish':
+    console.log('2nd place in number of native speaker!')
+    break
+  case 'English':
+    console.log('3rd place')
+    break
+  case 'Hindi':
+    console.log('Number 4')
+    break
+  case 'Arabic':
+    console.log('5th most spoken language')
+    break
+  default:
+    console.log('Great language too :D')
+}
+
+// The conditional (ternary) Operator
+// my answer
+population > 33 ? console.log(`${country}'s population is above average!`) : console.log(`${country}'s population is below average!`)
+
+// Jonas's
+console.log(`${country}'s population is ${population > 33 ? 'above' : 'below'} the average! `)
