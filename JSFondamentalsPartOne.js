@@ -167,3 +167,16 @@ population > 33 ? console.log(`${country}'s population is above average!`) : con
 
 // Jonas's
 console.log(`${country}'s population is ${population > 33 ? 'above' : 'below'} the average! `)
+
+// Coding challenge #4
+// My answer
+let bill = 40
+let tip = 50 <= bill <= 300 ? bill * 0.15 : bill * 0.2
+console.log(`The bill was ${bill}, the tip was ${tip}, and the total value ${bill + tip}`)
+// This will have a bug because it will be (50 <= bill) <= 300, the front part in parenthesis will output boolean value first, then compare to the integer behind, then it will be always true because engine takes true as 1, false as 0.
+
+// correct answer
+let tip2 = 50 <= bill && bill <= 300 ? bill * 0.15 : bill * 0.2
+console.log(`The bill was ${bill}, the tip was ${tip2}, and the total value ${bill + tip2}`)
+
+// finish part one! 🎉🎉🎉
