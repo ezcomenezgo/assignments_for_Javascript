@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-30 10:53:44
- * @LastEditTime: 2021-08-09 17:48:09
+ * @LastEditTime: 2021-08-10 18:25:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /assignments_for_Javascript/14-OOP/starter/script.js
@@ -121,13 +121,16 @@
 
 // class Car {
 //   constructor (make, speed) {
+//     console.log(make, speed)
 //     this.make = make
 //     this.speed = speed
 //     this.speedUS = speed
+//     console.log(this.speed)
 //   }
 
 //   accelerate () {
-//     console.log(this.speed += 10)
+//     console.log(this.speed)
+//     console.log(this.speed += 20)
 //   }
 
 //   brake () {
@@ -144,27 +147,116 @@
 //   }
 // }
 
-// const carTest = new Car('Ford', 120)
-// carTest.accelerate()
-// console.log(carTest.speedUS)
+// const EV = function (make, speed, charge) {
+//   Car.call(this, make, speed)
+//   this.charge = charge
+// }
 
-const Person = function(firstName, birthYear) {
-  this.firstName = firstName
-  this.birthYear = birthYear
+// EV.prototype = Object.create(Car.prototype)
+// EV.prototype.chargeBattery = function (chargeTo) {
+//   this.charge = chargeTo
+// }
+
+// EV.prototype.accelerate = function () {
+//   this.speed += 20
+//   this.charge--
+//   console.log(this.speed, this.charge)
+// }
+
+// const evTest = new EV('Tesla', 115, 23)
+// evTest.chargeBattery(66)
+// console.log(evTest)
+// evTest.accelerate()
+
+// // const carTest = new Car('Ford', 120)
+// // carTest.accelerate()
+// // console.log(carTest.speedUS)
+
+// const Person = function(firstName, birthYear) {
+//   this.firstName = firstName
+//   this.birthYear = birthYear
+// }
+
+// Person.prototype.calcAge = function () {
+//   console.log(2037 - this.birthYear)
+// }
+
+// const Student = function (firstName, birthYear, course) {
+//   Person.call(this, firstName, birthYear)
+//   this.course = course
+// }
+
+// // Linked to prototypes
+// Student.prototype = Object.create(Person.prototype)
+
+// Student.prototype.introduce = function () {
+//   console.log(`My name is ${this.firstName} and I study ${this.course}`)
+// }
+
+// const mike = new Student('Mike', 2020, 'CS')
+// // console.log(mike)
+// mike.introduce()
+// mike.calcAge()
+
+// class PersonCl {
+//   constructor(fullName, birthYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birthYear;
+//   }
+
+//   // static methods
+//   static hey () {
+//     console.log('hey hey')
+//   }
+
+//   // Instance methods
+//   // Methods will be added to .prototype property
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   }
+
+//   greet() {
+//     console.log(`Hey ${this.fullName}`);
+//   }
+
+//   get age() {
+//     return 2037 - this.birthYear;
+//   }
+
+//   // Set a property that already exists
+//   set fullName(name) {
+//     if (name.includes(' ')) this._fullName = name;
+//     else alert(`${name} is not a full name!`);
+//   }
+
+//   get fullName() {
+//     return this._fullName;
+//   }
+// }
+
+// class StudentCl extends PersonCl {
+//   constructor (fullName, birthYear, course) {
+//     super(fullName, birthYear)
+//     this.course = course
+//   }
+
+//   introduce(){}
+
+//   calcAge(){}
+// }
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init (firstName, birthYear) {
+    this.firstName = firstName
+    this.birthYear = birthYear
+  }
 }
 
-Person.prototype.calcAge = function () {
-  console.log(2037 - this.birthYear)
-}
-
-const Student = function (firstName, birthYear, course) {
-  Person(firstName, birthYear)
-  this.course = course
-}
-
-Student.prototype.introduce = function () {
-  console.log(`My name is ${this.name} and I study ${this.course}`)
-}
-
-const mike = new Student('Mike', 2020, 'CS')
-mike.introduce()
+const steven = Object.create(PersonProto)
+const StudentProto = Object.create(PersonProto)
+const jay = Object.create(StudentProto)
+console.log(jay)
