@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-30 10:53:44
- * @LastEditTime: 2021-08-10 18:25:58
+ * @LastEditTime: 2021-08-15 18:06:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /assignments_for_Javascript/14-OOP/starter/script.js
@@ -245,18 +245,132 @@
 //   calcAge(){}
 // }
 
-const PersonProto = {
-  calcAge() {
-    console.log(2037 - this.birthYear);
-  },
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   },
 
-  init (firstName, birthYear) {
-    this.firstName = firstName
-    this.birthYear = birthYear
+//   init (firstName, birthYear) {
+//     this.firstName = firstName
+//     this.birthYear = birthYear
+//   }
+// }
+
+// const steven = Object.create(PersonProto)
+// const StudentProto = Object.create(PersonProto)
+// const jay = Object.create(StudentProto)
+// console.log(jay)
+
+// class Account {
+//   // 1) public fields
+//   locale = navigator.language
+//   // 2) private fields
+//   #movements = []
+//   #pin
+
+//   constructor(owner, currency, pin) {
+//     this.owner  = owner
+//     this.currency = currency
+//     this.#pin = pin
+//     // this.movements = []
+//     // this.locale = navigator.language
+//   }
+
+//   // 3) public method
+//   // Public interface
+//   deposit(val) {
+//     this.#movements.push(val)
+//   }
+
+//   withdraw() {
+//     this.deposit.push(-val)
+//   }
+
+//   requestLoan (val) {
+//     // if(this.#approveLoan(val)) {
+//     if(this._approveLoan(val)) {
+//       this.deposit(val)
+//       console.log(this.#movements)
+//     }
+//   }
+
+//   // 4) private method
+//   // #approveLoan(val) {
+//   _approveLoan(val) {
+//     return true
+//   }
+// }
+
+// const acc1 = new Account('Jonas', 'ERU', 1111)
+// console.log(acc1)
+
+// acc1.requestLoan(1000)
+// // console.log(this.#movement)
+
+// // Chaining
+
+class Car {
+  constructor (make, speed) {
+    this.make = make
+    this.speed = speed
+    this.speedUS = speed
+  }
+
+  accelerate () {
+    console.log(this.speed)
+    console.log(this.speed += 20)
+    return this
+  }
+
+  brake () {
+    this.speed -= 5
+    return this
+  }
+
+  set speedUS (speed) {
+    console.log(speed)
+    this._speedUS = speed / 1.6
+  }
+
+  get speedUS () {
+    return this._speedUS
   }
 }
 
-const steven = Object.create(PersonProto)
-const StudentProto = Object.create(PersonProto)
-const jay = Object.create(StudentProto)
-console.log(jay)
+class EVCL extends Car {
+  #charge
+
+  constructor(make, speed, charge) {
+    super(make, speed)
+    this.#charge = charge
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo
+  }
+
+}
+
+const car1 = new EVCL('Rivian', 120, 23)
+console.log(car1)
+
+// const EV = function (make, speed, charge) {
+//   Car.call(this, make, speed)
+//   this.charge = charge
+// }
+
+// EV.prototype = Object.create(Car.prototype)
+// EV.prototype.chargeBattery = function (chargeTo) {
+//   this.charge = chargeTo
+// }
+
+// EV.prototype.accelerate = function () {
+//   this.speed += 20
+//   this.charge--
+//   console.log(this.speed, this.charge)
+// }
+
+// const evTest = new EV('Tesla', 115, 23)
+// evTest.chargeBattery(66)
+// console.log(evTest)
+// evTest.accelerate()
