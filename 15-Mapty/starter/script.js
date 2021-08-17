@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-16 09:58:21
- * @LastEditTime: 2021-08-16 19:25:59
+ * @LastEditTime: 2021-08-17 10:02:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /15-Mapty/starter/script.js
@@ -21,34 +21,59 @@ const inputElevation = document.querySelector('.form__input--elevation');
 
 let map, mapEvent
 
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(function (position) {
+class App {
+  #map
+  #mapEvent
+
+  constructor() {
+    this._getPosition()
+  }
+
+  _getPosition() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), function () {
+        alert("can't get your current location")
+      })
+    }
+  }
+
+  _loadMap(position) {
     const { latitude } = position.coords
     const { longitude } = position.coords
     console.log(`https://www.google.com.tw/maps/@${latitude},${longitude}`)
 
     const coords = [latitude, longitude]
 
-    map = L.map('map').setView(coords, 13);
-    console.log(map)
+    this.#map = L.map('map').setView(coords, 13);
+    const self = this
 
     L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    }).addTo(this.#map);
 
-    map.on('click', function (e) {
-      mapEvent = e
+    this.#map.on('click', function (e) {
+      self.#mapEvent = e
 
       form.classList.remove('hidden')
       inputDistance.focus()
     })
-  }, function () {
-    alert("can't get your current location")
-  })
+  }
+
+
+  _showHoem() { }
+
+  _toggleElevationField() { }
+
+  _newWorkout() { }
 }
+
+const app = new App()
 
 form.addEventListener('submit', function (e) {
   e.preventDefault()
+
+  // Clear input fields
+  inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = ''
 
   const { lat, lng } = mapEvent.latlng
 
@@ -62,4 +87,9 @@ form.addEventListener('submit', function (e) {
     }))
     .setPopupContent('Workout')
     .openPopup();
+})
+
+inputType.addEventListener('change', function () {
+  inputCadence.closest('.form__row').classList.toggle('form__row--hidden')
+  inputElevation.closest('.form__row').classList.toggle('form__row--hidden')
 })
