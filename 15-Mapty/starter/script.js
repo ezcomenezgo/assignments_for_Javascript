@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-16 09:58:21
- * @LastEditTime: 2021-08-23 14:09:04
+ * @LastEditTime: 2021-08-24 14:43:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /15-Mapty/starter/script.js
@@ -86,8 +86,13 @@ class App {
   #workout = []
 
   constructor() {
+    // get user's position
     this._getPosition()
 
+    // get data from local storage
+    this._getLocalStorage()
+
+    // attach event handlers
     form.addEventListener('submit', this._newWorkout.bind(this))
     inputType.addEventListener('change', this._toggleElevationField)
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this))
@@ -115,6 +120,10 @@ class App {
     }).addTo(this.#map);
 
     this.#map.on('click', this._showForm.bind(this))
+
+    this.#workout.forEach(work => {
+      this._renderWorkoutMarker(work)
+    })
   }
 
 
@@ -183,6 +192,9 @@ class App {
 
     // Hide form + Clear input fields
     this._hideForm()
+
+    // Set to the local storage
+    this._setToLocalStorage()
   }
 
   _renderWorkoutMarker(workout) {
@@ -254,7 +266,6 @@ class App {
 
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout')
-    // console.log(workoutEl)
 
     if(!workoutEl) return
 
@@ -268,7 +279,28 @@ class App {
     })
 
     // use public interface
-    workout.click()
+    // workout.click()
+  }
+
+  _setToLocalStorage() {
+    localStorage.setItem('workouts', JSON.stringify(this.#workout))
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('workouts'))
+
+    if(!data) return
+
+    this.#workout = data
+
+    this.#workout.forEach(work => {
+      this._renderWorkoutForm(work)
+    })
+  }
+
+  reset() {
+    localStorage.removeItem('workouts')
+    location.reload()
   }
 }
 
